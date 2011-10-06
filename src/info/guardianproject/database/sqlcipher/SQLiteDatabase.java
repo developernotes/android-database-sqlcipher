@@ -37,6 +37,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.WeakHashMap;
+import java.util.zip.ZipEntry; 
+import java.util.zip.ZipInputStream;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Pattern;
 
@@ -76,27 +78,56 @@ public class SQLiteDatabase extends SQLiteClosable {
     private static void loadICUData(Context context) {
         
         try {
+            
             File applicationFilesDirectory = context.getFilesDir();
             File icuDir = new File(applicationFilesDirectory, "icu");
             if(!icuDir.exists()) icuDir.mkdirs();
             File icuDataFile = new File(icuDir, "icudt44l.dat");
+            
             if(!icuDataFile.exists()) {
-                InputStream in = context.getAssets().open("icudt44l.mp3");
-                OutputStream out = new FileOutputStream(icuDataFile);
-                byte[] buf = new byte[1024];
-                int len;
-                while ((len = in.read(buf)) > 0) {
-                    out.write(buf, 0, len);
-                }
-                in.close();
-                out.flush();
-                out.close();
+                InputStream source = context.getAssets().open("icudt44l.zip");
+                unzipFileTo(source, icuDir.getAbsolutePath());
+                source.close();
             }
         }
         catch (Exception e) {
             Log.e(TAG, "Error copying icu data file" + e.getMessage());
         }
     }
+
+    private static void unzipFileTo(InputStream source, String destination) {
+
+        try {
+            ZipEntry entry;
+            ZipInputStream zipFile = new ZipInputStream(source);
+            while((entry = zipFile.getNextEntry()) != null) {
+                if(entry.isDirectory()){
+                    createDirectoryIfNotExists(destination, entry.getName());
+                } else {
+                    FileOutputStream file = new FileOutputStream(String.format("%s/%s", destination, entry.getName()));
+                    int length;
+                    byte[] buffer = new byte[1024];
+                    while((length = zipFile.read(buffer)) > 0) {
+                        file.write(buffer, 0, length);
+                    }
+                    zipFile.closeEntry();
+                    file.close();
+                }
+            }
+            zipFile.close();
+        }
+        catch(Exception e){
+            Log.e(TAG, "Error unzipping file to:" + destination);
+        }
+    }
+
+    private static void createDirectoryIfNotExists(String parent, String child) {
+        File location = new File(parent, child);
+        if(!location.isDirectory()){
+            location.mkdirs();
+        }
+    }
+
 
     public static void loadLibs (Context context)
     {
@@ -106,7 +137,7 @@ public class SQLiteDatabase extends SQLiteClosable {
         
         File applicationFilesDirectory = context.getFilesDir();
         String icuRootPath = android.os.Build.VERSION.SDK_INT < 9 ? applicationFilesDirectory.getAbsolutePath()
-                                                                  : "/system/usr";            
+            : "/system/usr";            
         setICURoot(icuRootPath);
         if(android.os.Build.VERSION.SDK_INT < 9){
             loadICUData(context);
