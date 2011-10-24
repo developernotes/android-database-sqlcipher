@@ -69,6 +69,7 @@ Notepadbot is a sample application pulled from the standard Android samples code
 
 In order to build android-database-sqlcipher from source you will need both the Android SDK as well as Android NDK.  Once you have cloned the repo, change directory into the root of the repository and run the following commands:
 
+:  git submodule update --init
 :  cd external
 :  make -f Android.mk build-local-hack
 :  ndk-build
@@ -82,7 +83,7 @@ In order to build android-database-sqlcipher from source you will need both the 
 :  cd bin/classes
 :  jar -cvf sqlcipher.jar .
 
-Copy =libsqlcipher_android.so= in =external/libs/armeabi= and  =libdatabase_sqlcipher.so= in =jni/libs/armeabi= to your application =libs/armeabi= folder.  Copy the =sqlcipher.jar= file in =bin/classes= to your =libs= directory.  Finally, copy the =icudt44l.zip= file in the =assets= directory to your =assets= directory.
+Copy =libsqlcipher_android.so= in =external/libs/armeabi= and  =libdatabase_sqlcipher.so= in =jni/libs/armeabi= to your application =libs/armeabi= folder.  Copy the =sqlcipher.jar= file in =bin/classes= to your =libs= directory.  Finally, copy the =icudt44l.zip= file in the =assets= directory to your =assets= directory.  Finally, you will need to copy =commons-codec.jar= and =guava-r09.jar= located in the =libs= directory into your application =libs= directory.
 
 *** Final Notes
 
