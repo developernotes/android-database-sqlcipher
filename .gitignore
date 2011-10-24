@@ -3,3 +3,6 @@ external/libs
 jni/libs
 obj/
 .DS_Store
+build.xml
+local.properties
+proguard.cfg
