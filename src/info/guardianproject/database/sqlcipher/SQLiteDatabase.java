@@ -1425,10 +1425,9 @@ public class SQLiteDatabase extends SQLiteClosable {
 
         Cursor cursor = null;
         try {
-
             cursor = driver.query(
-                                  cursorFactory != null ? cursorFactory : mFactory,
-                                  selectionArgs);
+                    cursorFactory != null ? cursorFactory : mFactory,
+                    selectionArgs);
         } finally {
             if (Config.LOGV || mSlowQueryThreshold != -1) {
 
@@ -1443,9 +1442,9 @@ public class SQLiteDatabase extends SQLiteClosable {
                 if (Config.LOGV || duration >= mSlowQueryThreshold) {
                     Log.v(SQLiteCursor.TAG,
                           "query (" + duration + " ms): " + driver.toString() + ", args are "
-                          + (selectionArgs != null
-                             ? TextUtils.join(",", selectionArgs)
-                             : "<null>")  + ", count is " + count);
+                                  + (selectionArgs != null
+                                  ? TextUtils.join(",", selectionArgs)
+                                  : "<null>")  + ", count is " + count);
                 }
             }
         }
@@ -1472,8 +1471,7 @@ public class SQLiteDatabase extends SQLiteClosable {
      */
     public Cursor rawQuery(String sql, String[] selectionArgs,
                            int initialRead, int maxRead) {
-        SQLiteCursor c = (SQLiteCursor)rawQueryWithFactory(
-                                                           null, sql, selectionArgs, null);
+        SQLiteCursor c = (SQLiteCursor)rawQueryWithFactory(null, sql, selectionArgs, null);
         c.setLoadStyle(initialRead, maxRead);
         return c;
     }
