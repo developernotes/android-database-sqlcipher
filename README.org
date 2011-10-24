@@ -1,6 +1,6 @@
 
 Current SDK distro for developers, with the jar’s, .so’s and a quick sample can be found here:
- https://github.com/guardianproject/android-database-sqlcipher/downloads
+ [[https://github.com/guardianproject/android-database-sqlcipher/downloads]]
 
 A full demonstration app with the bundled SQLCipher R1 release is here:
 https://github.com/guardianproject/notepadbot
@@ -20,29 +20,29 @@ An Illustrative Terminal Listing
 
 A typical SQLite database in unencrypted, and visually parseable even as encoded text. The following example shows the difference between hexdumps of a standard SQLite db and one implementing SQLCipher.
 
-~ sjlombardo$ hexdump -C sqlite.db
-00000000 53 51 4c 69 74 65 20 66 6f 72 6d 61 74 20 33 00 |SQLite format 3.|
-…
-000003c0 65 74 32 74 32 03 43 52 45 41 54 45 20 54 41 42 |et2t2.CREATE TAB|
-000003d0 4c 45 20 74 32 28 61 2c 62 29 24 01 06 17 11 11 |LE t2(a,b)$…..|
-…
-000007e0 20 74 68 65 20 73 68 6f 77 15 01 03 01 2f 01 6f | the show…./.o|
-000007f0 6e 65 20 66 6f 72 20 74 68 65 20 6d 6f 6e 65 79 |ne for the money|
-
-~ $ sqlite3 sqlcipher.db
-sqlite> PRAGMA KEY=’test123′;
-sqlite> CREATE TABLE t1(a,b);
-sqlite> INSERT INTO t1(a,b) VALUES (‘one for the money’, ‘two for the show’);
-sqlite> .quit
-
-~ $ hexdump -C sqlite.db
-00000000 84 d1 36 18 eb b5 82 90 c4 70 0d ee 43 cb 61 87 |.?6.?..?p.?C?a.|
-00000010 91 42 3c cd 55 24 ab c6 c4 1d c6 67 b4 e3 96 bb |.B?..?|
-00000bf0 8e 99 ee 28 23 43 ab a4 97 cd 63 42 8a 8e 7c c6 |..?(#C??.?cB..|?|
-
-~ $ sqlite3 sqlcipher.db
-sqlite> SELECT * FROM t1;
-Error: file is encrypted or is not a database
+:  ~ sjlombardo$ hexdump -C sqlite.db
+:  00000000 53 51 4c 69 74 65 20 66 6f 72 6d 61 74 20 33 00 |SQLite format 3.|
+:  …
+:  000003c0 65 74 32 74 32 03 43 52 45 41 54 45 20 54 41 42 |et2t2.CREATE TAB|
+:  000003d0 4c 45 20 74 32 28 61 2c 62 29 24 01 06 17 11 11 |LE t2(a,b)$…..|
+:  …
+:  000007e0 20 74 68 65 20 73 68 6f 77 15 01 03 01 2f 01 6f | the show…./.o|
+:  000007f0 6e 65 20 66 6f 72 20 74 68 65 20 6d 6f 6e 65 79 |ne for the money|
+:  
+:  ~ $ sqlite3 sqlcipher.db
+:  sqlite> PRAGMA KEY=’test123′;
+:  sqlite> CREATE TABLE t1(a,b);
+:  sqlite> INSERT INTO t1(a,b) VALUES (‘one for the money’, ‘two for the show’);
+:  sqlite> .quit
+:  
+:  ~ $ hexdump -C sqlite.db
+:  00000000 84 d1 36 18 eb b5 82 90 c4 70 0d ee 43 cb 61 87 |.?6.?..?p.?C?a.|
+:  00000010 91 42 3c cd 55 24 ab c6 c4 1d c6 67 b4 e3 96 bb |.B?..?|
+:  00000bf0 8e 99 ee 28 23 43 ab a4 97 cd 63 42 8a 8e 7c c6 |..?(#C??.?cB..|?|
+:  
+:  ~ $ sqlite3 sqlcipher.db
+:  sqlite> SELECT * FROM t1;
+:  Error: file is encrypted or is not a database
 
 (example courtesy of SQLCipher)
 
@@ -65,6 +65,24 @@ Notepad + SQLCipher = Notepadbot
 
 Notepadbot is a sample application pulled from the standard Android samples code and updated to use SQLCipher. You can browse the source here and download the apk here.
 
+Building
+
+In order to build android-database-sqlcipher from source you will need both the Android SDK as well as Android NDK.  Once you have cloned the repo, change directory into the root of the repository and run the following commands:
+
+:  cd external
+:  make -f Android.mk build-local-hack
+:  ndk-build
+:  make -f Android.mk copy-libs-hack
+
+:  cd ../jni
+:  ndk-build
+
+:  cd ..
+:  ant compile
+:  cd bin/classes
+:  jar -cvf sqlcipher.jar .
+
+Copy =libsqlcipher_android.so= in =external/libs/armeabi= and  =libdatabase_sqlcipher.so= in =jni/libs/armeabi= to your application =libs/armeabi= folder.  Copy the =sqlcipher.jar= file in =bin/classes= to your =libs= directory.  Finally, copy the =icudt44l.zip= file in the =assets= directory to your =assets= directory.
 
 Final Notes
 
