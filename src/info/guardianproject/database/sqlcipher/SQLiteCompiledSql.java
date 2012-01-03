@@ -16,6 +16,7 @@
 
 package info.guardianproject.database.sqlcipher;
 
+import info.guardianproject.database.sqlcipher.DatabaseObjectNotClosedException;
 import android.util.Log;
 
 /**

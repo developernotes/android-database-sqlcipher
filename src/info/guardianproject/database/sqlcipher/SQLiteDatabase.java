@@ -16,9 +16,8 @@
 
 package info.guardianproject.database.sqlcipher;
 
-import info.guardianproject.database.CrossProcessCursorWrapper;
 import info.guardianproject.database.DatabaseUtils;
-import info.guardianproject.database.SQLException;
+import android.database.SQLException;
 import info.guardianproject.database.sqlcipher.SQLiteDebug.DbStats;
 
 import java.io.File;
@@ -1418,7 +1417,7 @@ public class SQLiteDatabase extends SQLiteClosable {
                 }
             }
         }
-        return new CrossProcessCursorWrapper(cursor);
+        return cursor;
     }
 
     /**

@@ -16,9 +16,9 @@
 
 package info.guardianproject.database.sqlcipher;
 
-import info.guardianproject.database.AbstractWindowedCursor;
-import info.guardianproject.database.CursorWindow;
-import info.guardianproject.database.SQLException;
+import android.database.AbstractWindowedCursor;
+import android.database.CursorWindow;
+import android.database.SQLException;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -168,7 +168,14 @@ public class SQLiteCursor extends AbstractWindowedCursor {
     protected class MainThreadNotificationHandler extends Handler {
         public void handleMessage(Message msg) {
             
-        	notifyDataSetChange();
+            Class c = this.getClass().getSuperclass();
+            try {
+                java.lang.reflect.Method m = c.getDeclaredMethod("notifyDataSetChange");
+        	    m.setAccessible(true);
+        	    m.invoke(this);
+            } catch (Exception e) {
+                Log.i(TAG, "SQLiteCursor.java: " + e);
+            }
             
         }
     }
@@ -186,7 +193,14 @@ public class SQLiteCursor extends AbstractWindowedCursor {
             try {
                 mNotificationHandler = new MainThreadNotificationHandler();
                 if (mPendingData) {
-                	notifyDataSetChange();
+                    Class c = this.getClass().getSuperclass();
+                    try {
+                        java.lang.reflect.Method m = c.getDeclaredMethod("notifyDataSetChange");
+                	    m.setAccessible(true);
+                	    m.invoke(this);
+                    } catch (Exception e) {
+                        Log.i(TAG, "SQLiteCursor.java: " + e);
+                    }
                     mPendingData = false;
                 }
             } finally {
@@ -390,8 +404,18 @@ public class SQLiteCursor extends AbstractWindowedCursor {
      */
   //  @Override
     public boolean supportsUpdates() {
-       // return super.supportsUpdates() && !TextUtils.isEmpty(mEditTable);
-    	return  !TextUtils.isEmpty(mEditTable);
+    	boolean supportUpdates = false;
+    	
+        Class c = this.getClass().getSuperclass().getSuperclass();
+        try {
+            java.lang.reflect.Method m = c.getDeclaredMethod("supportsUpdates");
+    	    m.setAccessible(true);
+    	    supportUpdates = (Boolean) m.invoke(this);
+        } catch (Exception e) {
+            Log.i("DT", "SQLiteCursor.java: " + e);
+        }
+
+    	return supportUpdates && !TextUtils.isEmpty(mEditTable);
     }
 
     /**
@@ -604,8 +628,6 @@ public class SQLiteCursor extends AbstractWindowedCursor {
             super.finalize();
         }
     }
-
-
 	
 	@Override
 	public void fillWindow(int startPos, android.database.CursorWindow window) {

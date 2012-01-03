@@ -26,8 +26,8 @@ LOCAL_SRC_FILES:= \
 	info_guardianproject_database_sqlcipher_SQLiteProgram.cpp \
 	info_guardianproject_database_sqlcipher_SQLiteQuery.cpp \
 	info_guardianproject_database_sqlcipher_SQLiteStatement.cpp \
-	info_guardianproject_database_CursorWindow.cpp \
 	CursorWindow.cpp
+#	info_guardianproject_database_CursorWindow.cpp \
 #	info_guardianproject_database_sqlcipher_SQLiteDebug.cpp
 
 LOCAL_C_INCLUDES += \

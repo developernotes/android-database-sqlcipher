@@ -21,10 +21,12 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import info.guardianproject.database.*;
+import info.guardianproject.database.sqlcipher.SQLiteException;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
+
+import info.guardianproject.database.*;
 
 /**
  * @hide

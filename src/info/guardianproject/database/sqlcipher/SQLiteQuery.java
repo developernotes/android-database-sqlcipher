@@ -17,6 +17,9 @@
 package info.guardianproject.database.sqlcipher;
 import info.guardianproject.database.*;
 
+import android.database.CursorWindow;
+import info.guardianproject.database.sqlcipher.SQLiteDatabaseCorruptException;
+import info.guardianproject.database.sqlcipher.SQLiteMisuseException;
 import android.os.SystemClock;
 import android.util.Log;
 

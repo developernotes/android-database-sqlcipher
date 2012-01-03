@@ -19,6 +19,8 @@ package info.guardianproject.database.sqlcipher;
 import java.io.File;
 
 import android.content.Context;
+import info.guardianproject.database.sqlcipher.SQLiteException;
+
 import info.guardianproject.database.sqlcipher.SQLiteDatabase.CursorFactory;
 import android.util.Log;
 

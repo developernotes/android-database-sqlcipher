@@ -21,7 +21,7 @@ import info.guardianproject.database.*;
 /**
  * A SQLite exception that indicates there was an error with SQL parsing or execution.
  */
-public class SQLiteException extends SQLException {
+public class SQLiteException extends android.database.SQLException {
     public SQLiteException() {}
 
     public SQLiteException(String error) {
