@@ -1,8 +1,10 @@
 
-LIBCUTILS_SOURCE_PATH := platform-system-core/libcutils
-LIBCUTILS_HEADER_PATH := platform-system-core/include
-BIONIC_INCLUDE_PATH := bionic/libc/include
-BIONIC_KERNEL_INCLUDE_PATH := bionic/libc/kernel/common
+LOCAL_LIBCUTILS_PATH := $(call my-dir)
+
+LIBCUTILS_SOURCE_PATH := $(LOCAL_LIBCUTILS_PATH)/platform-system-core/libcutils
+LIBCUTILS_HEADER_PATH := $(LOCAL_LIBCUTILS_PATH)/platform-system-core/include
+BIONIC_INCLUDE_PATH := $(LOCAL_LIBCUTILS_PATH)/bionic/libc/include
+BIONIC_KERNEL_INCLUDE_PATH := $(LOCAL_LIBCUTILS_PATH)/bionic/libc/kernel/common
 
 include $(CLEAR_VARS)
 
