@@ -76,7 +76,7 @@ LOCAL_ALLOW_UNDEFINED_SYMBOLS := false
 
 # TODO this needs to depend on libsqlcipher being built, how to do that?
 #LOCAL_REQUIRED_MODULES += libsqlcipher libicui18n libicuuc 
-LOCAL_STATIC_LIBRARIES := libsqlcipher libicui18n libicuuc
+LOCAL_STATIC_LIBRARIES := libsqlcipher libicui18n libicuuc libcutils
 
 LOCAL_CFLAGS += $(android_sqlite_cflags) $(sqlite_cflags) -DOS_PATH_SEPARATOR="'/'"
 
@@ -89,7 +89,7 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/platform-frameworks-base/include
 
 LOCAL_LDFLAGS += -L$(LOCAL_PATH)/android-libs/ -L$(LOCAL_PATH)/libs/armeabi/
-LOCAL_LDLIBS := -llog -lutils -lcutils -lcrypto
+LOCAL_LDLIBS := -llog -lutils -lcrypto
 LOCAL_MODULE := libsqlcipher_android
 LOCAL_MODULE_FILENAME := libsqlcipher_android
 LOCAL_SRC_FILES := $(libsqlite3_android_local_src_files)
@@ -374,3 +374,9 @@ endif
 #-------------
 # end stubdata
 #-------------
+
+# libcutil begin
+
+include libcutils.mk
+
+# libcutil end

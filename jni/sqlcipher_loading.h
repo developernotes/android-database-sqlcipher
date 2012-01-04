@@ -40,3 +40,6 @@ int register_android_database_CursorWindow(JNIEnv *env);
 
 }
 
+namespace android {
+int register_android_database_SQLiteQuery(JNIEnv * env);
+}

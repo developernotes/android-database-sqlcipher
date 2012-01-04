@@ -2,13 +2,13 @@ LOCAL_PATH:= $(call my-dir)
 
 EXTERNAL_PATH := ../external
 
+include $(EXTERNAL_PATH)/libcutils.mk
+
 ifeq ($(TARGET_ARCH), arm)
 	LOCAL_CFLAGS += -DPACKED="__attribute__ ((packed))"
 else
 	LOCAL_CFLAGS += -DPACKED=""
 endif
-
-#TARGET_PLATFORM := android-8
 
 ifeq ($(WITH_JIT),true)
 	LOCAL_CFLAGS += -DWITH_JIT
@@ -60,11 +60,14 @@ LOCAL_LDLIBS += -lnativehelper -landroid_runtime -lutils -lbinder
 #LOCAL_REQUIRED_MODULES += libsqlcipher libicuuc libicui18n
 LOCAL_LDLIBS += -lsqlcipher_android
 
+LOCAL_STATIC_LIBRARIES += libcutils
+
 ifeq ($(WITH_MALLOC_LEAK_CHECK),true)
 	LOCAL_CFLAGS += -DMALLOC_LEAK_CHECK
 endif
 
 LOCAL_MODULE:= libdatabase_sqlcipher
+
 
 include $(BUILD_SHARED_LIBRARY)
 

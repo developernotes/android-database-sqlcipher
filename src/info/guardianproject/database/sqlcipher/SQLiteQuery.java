@@ -73,7 +73,7 @@ public class SQLiteQuery extends SQLiteProgram {
                 // if the start pos is not equal to 0, then most likely window is
                 // too small for the data set, loading by another thread
                 // is not safe in this situation. the native code will ignore maxRead
-                int numRows = native_fill_window(window, window.getStartPosition(), mOffsetIndex,
+                int numRows = nativeFillWindow(window, window.getStartPosition(), mOffsetIndex,
                         maxRead, lastPos);
 
                 // Logging
@@ -107,7 +107,7 @@ public class SQLiteQuery extends SQLiteProgram {
     /* package */ int columnCountLocked() {
         acquireReference();
         try {
-            return native_column_count();
+            return nativeColumnCount();
         } finally {
             releaseReference();
         }
@@ -123,7 +123,7 @@ public class SQLiteQuery extends SQLiteProgram {
     /* package */ String columnNameLocked(int columnIndex) {
         acquireReference();
         try {
-            return native_column_name(columnIndex);
+            return nativeColumnName(columnIndex);
         } finally {
             releaseReference();
         }
@@ -188,10 +188,10 @@ public class SQLiteQuery extends SQLiteProgram {
         if (!mClosed) super.bindString(index, value);
     }
 
-    private final native int native_fill_window(CursorWindow window, 
+    private final native int nativeFillWindow(CursorWindow window, 
             int startPos, int offsetParam, int maxRead, int lastPos);
 
-    private final native int native_column_count();
+    private final native int nativeColumnCount();
 
-    private final native String native_column_name(int columnIndex);
+    private final native String nativeColumnName(int columnIndex);
 }

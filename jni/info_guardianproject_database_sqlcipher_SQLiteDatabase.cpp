@@ -509,7 +509,7 @@ extern "C" jint JNI_OnLoad(JavaVM* vm, void* reserved)
 	register_android_database_SQLiteDatabase(env);
 	register_android_database_SQLiteCompiledSql(env);
 
-	register_android_database_SQLiteQuery(env);
+  android::register_android_database_SQLiteQuery(env);
 
 	register_android_database_SQLiteProgram(env);
 

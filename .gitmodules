@@ -22,3 +22,6 @@
 [submodule "notepadbot"]
 	path = dist/SQLCipherForAndroid-SDK/samples/notepadbot
 	url = git://github.com/guardianproject/notepadbot.git
+[submodule "external/bionic"]
+	path = external/bionic
+	url = git://github.com/android/platform_bionic.git
